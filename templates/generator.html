@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Prime-Generator{% endblock title %}
+    
+{% block content %}
+    <h1> Prime Generator </h1>
+    <form id="compute-form" class="from col-md-6 d-flex flex-column justify-content-center">
+        <input type="text" class="form-control my-2" id="digits" placeholder="Enter Digits" />
+        <input type="text" class="form-control my-2" id="reps" placeholder="Enter Reps" />
+        <button type="submit" class="btn btn-primary mx-auto my-4" id="compute">Generate</button>
+    </form>
+    <br />
+    <div id="result" class="col-md-6 text-wrap"></div>
+
+    <script>
+        const button = document.getElementById('compute');
+        async function compute(event) {
+            event.preventDefault();
+            const digits = document.getElementById('digits').value;
+            const reps = document.getElementById('reps').value;
+            if (isNaN(digits) || digits <= 0) {
+                document.getElementById('result').innerText = "Please enter a valid positive number for digits.";
+                return;
+            }
+            if (digits > 1000) {
+                document.getElementById('result').innerText = "Generating numbers over 1000 digits will make this site Slow.";
+                return;
+            }
+            button.disabled = true;
+            button.innerText = "Generating...";
+            const response = await fetch('/api/generator', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ digits, reps }),
+            });
+
+            const data = await response.json();
+            document.getElementById('result').innerText = "Result: " + data.result;
+            button.disabled = false;
+            button.innerText = "Generate";
+        }
+
+         window.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("compute-form").addEventListener("submit", compute);
+        });
+    </script>
+{% endblock content %}

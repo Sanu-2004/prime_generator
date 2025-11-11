@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Prime-Calc</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Checker</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/generator">Generator</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<br />
+<br />
+
+<script>
+    let nav = document.getElementsByClassName("nav-link")
+    for (let i = 0; i < nav.length; i++) {
+        console.log(nav[i].href, window.location.href);
+        if (nav[i].href === window.location.href) {
+            nav[i].classList.add('active');
+        } else {
+            nav[i].classList.remove('active');
+        }
+    }
+</script>
